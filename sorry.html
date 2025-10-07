@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I'm Sorry 💔</title>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #ffcce6;
+  font-family: 'Poppins', sans-serif;
+  color: #ff1a75;
+  text-align: center;
+}
+
+/* floating heart animation */
+.heart {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 102, 178, 0.6);
+  transform: rotate(45deg);
+  animation: float 7s linear infinite;
+  z-index: 0;
+}
+.heart::before, .heart::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 102, 178, 0.6);
+  border-radius: 50%;
+}
+.heart::before { top: -20px; left: 0; }
+.heart::after { left: -20px; top: 0; }
+
+/* floating text animation */
+.floating-text {
+  position: absolute;
+  font-size: 2.2em;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: bold;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+  animation: floatText 8s linear infinite;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+/* floating circular background images */
+.floating-img {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  filter: brightness(0.9);
+  opacity: 0.5;
+  animation: floatImg 10s linear infinite;
+  z-index: 0;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh) rotate(45deg); opacity: 1; }
+  100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
+}
+
+@keyframes floatText {
+  0% { transform: translateY(100vh); opacity: 1; }
+  100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+@keyframes floatImg {
+  0% { transform: translateY(100vh) rotate(10deg); opacity: 0.5; }
+  100% { transform: translateY(-10vh) rotate(10deg); opacity: 0; }
+}
+
+/* main content */
+#container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#photo-video-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#photo-video-container img, #photo-video-container video {
+  width: 430px;   /* width */
+  height: 430px;  /* height, portrait style */
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(255, 0, 102, 0.5);
+}
+
+h1 {
+  font-size: 1.6em;
+  margin: 20px 0;
+}
+
+button {
+  background-color: #ff4d94;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  margin: 10px;
+  border-radius: 20px;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover { background-color: #ff3385; }
+
+#noBtn.moving { position: absolute; }
+
+audio { display: none; }
+
+#playMusicBtn {
+  margin-top: 20px;
+  padding: 10px 25px;
+  border: none;
+  background-color: #ff3385;
+  color: white;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#playMusicBtn:hover {
+  background-color: #ff1a75;
+}
+</style>
+</head>
+<body>
+
+<script>
+// Floating hearts
+for (let i = 0; i < 80; i++) {
+  let heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+  heart.style.opacity = 0.3 + Math.random() * 0.4;
+  document.body.appendChild(heart);
+}
+
+// Floating texts
+for (let i = 0; i < 15; i++) {
+  let text = document.createElement("div");
+  text.classList.add("floating-text");
+  text.textContent = "TANVI SORRY 💖";
+  text.style.left = Math.random() * 90 + "vw";
+  text.style.animationDuration = 6 + Math.random() * 5 + "s";
+  text.style.opacity = 0.3 + Math.random() * 0.5;
+  document.body.appendChild(text);
+}
+
+// Floating circular images
+const circleImages = [];
+const circleImgSrc = "TANVIREAL.png";
+for (let i = 0; i < 15; i++) {
+  let img = document.createElement("img");
+  img.src = circleImgSrc;
+  img.classList.add("floating-img");
+  img.style.left = Math.random() * 100 + "vw";
+  img.style.animationDuration = 8 + Math.random() * 5 + "s";
+  document.body.appendChild(img);
+  circleImages.push(img);
+}
+</script>
+
+<!-- Music Play Button -->
+<button id="playMusicBtn">🎵 Play Music</button>
+
+<div id="container">
+  <div id="photo-video-container">
+    <img id="photo" src="" alt="Tanvi" style="display:none;"> <!-- photo hidden completely -->
+    <video id="video" autoplay loop muted></video>
+  </div>
+  <h1 id="message">aajayo mere pas wapas tanvi i am sorry🥺</h1>
+  <div>
+    <button id="yesBtn">Yessssss 😘</button>
+    <button id="noBtn">Nhi 😞</button>
+  </div>
+</div>
+
+<audio id="bgMusic" loop preload="auto">
+  <source src="Haareya-128kbps.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Play music
+const playBtn = document.getElementById("playMusicBtn");
+playBtn.addEventListener("click", () => {
+  const music = document.getElementById("bgMusic");
+  music.volume = 0.8;
+  music.play();
+  playBtn.style.display = "none";
+});
+</script>
+
+<script>
+// 🔹 Replace all center photos with videos
+const videos = [
+  "MANJYOTNEW1.MP4",  // slide 1 → replace with your video link
+  "MANJYOTNEW2.MP4",  // slide 2
+  "MANJYOTNEW3.MP4", // slide 3
+  "MANJYOTNEW4.MP4",  // slide 4
+  "MANJYOTNEW5.MP4",  // slide 5
+  "MANJYOTNEW6.MP4"   // slide 6
+];
+
+const messages = [
+  "Aajayo mere pas wapas Tanvi i am sorry 🥺",
+  "I promise sab thik ho jayega ",
+  "Ek chance tanvi I love u so much",
+  "I miss you so much 😭 you are my everthing ",
+  "I'm sorry i hurt you a lot 💞",
+  "Tumhe paro ki kasam aajyo mere pas Tanvi"
+];
+
+const video = document.getElementById("video");
+const message = document.getElementById("message");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+
+let slide = 0;
+let moving = false;
+
+// Show first video initially
+video.src = videos[0];
+video.load();
+video.play();
+
+noBtn.addEventListener("click", () => {
+  slide++;
+  if (slide < videos.length) {
+    message.textContent = messages[slide];
+    video.src = videos[slide];
+    video.load();
+    video.play();
+
+    if (slide === videos.length - 1 && !moving) {
+      moving = true;
+      noBtn.classList.add("moving");
+      startMovingNoButton();
+    }
+  }
+});
+
+yesBtn.addEventListener("click", () => {
+  message.textContent = "I love you so much TANVI ❤ ";
+  video.src = "MANJYOTNEW7.MP4"; // video to show after Yes
+  video.load();
+  video.play();
+  yesBtn.style.display = "none";
+  noBtn.style.display = "none";
+
+  const texts = document.querySelectorAll(".floating-text");
+  texts.forEach(txt => { txt.textContent = "LOVE U TANVI 💖"; });
+
+  const loveImg = "TANVI2.png";
+  circleImages.forEach(img => { img.src = loveImg; });
+});
+
+function startMovingNoButton() {
+  setInterval(() => {
+    const x = Math.random() * (window.innerWidth - 150);
+    const y = Math.random() * (window.innerHeight - 80);
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+  }, 700);
+
+  noBtn.addEventListener("mouseenter", () => {
+    const x = Math.random() * (window.innerWidth - 150);
+    const y = Math.random() * (window.innerHeight - 80);
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+  });
+}
+</script>
+
+</body>
+</html>
